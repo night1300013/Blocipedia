@@ -1,0 +1,21 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.jumbotron {
+  height: 35vh;
+}
+
+.btn-center {
+  height:50%;
+  display:flex;
+  align-items:center; /* vertically aligned! */
+  justify-content: center;
+}
+
+.space {
+  margin: 10%
+}
+
+.center {
+  margin: auto;
+}
