@@ -56,6 +56,18 @@ class WikisController < ApplicationController
     end
   end
 
+  def public
+    @wiki = Wiki.find(params[:id])
+    @wiki.update_attribute(:private, false)
+    redirect_to @wiki
+  end
+
+  def private
+    @wiki = Wiki.find(params[:id])
+    @wiki.update_attribute(:private, true)
+    redirect_to @wiki
+  end
+
   private
 
   def wiki_params

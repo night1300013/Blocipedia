@@ -10,5 +10,12 @@
     <small>
       created <%= time_ago_in_words(@wiki.created_at) %>
     </small>
+    <br/>
+    <% if current_user.premium? || current_user.admin? && @wiki.private %>
+      <%= link_to 'Public wiki' , public_path(@wiki), class: 'btn btn-danger', \
+    data: { confirm: 'Are you sure? You are about to public wiki.' } %>
+    <% elsif current_user.premium? || current_user.admin? && !@wiki.private %>
+      <%= link_to 'Private wiki' , private_path(@wiki), class: 'btn btn-primary' %>
+    <% end %>
   </div>
 </div>
