@@ -7,12 +7,12 @@ class User < ApplicationRecord
   has_many :wikis, dependent: :destroy
   enum role: [:admin, :standard, :premium]
   after_initialize :set_default_role, if: :new_record?
-  after_create :send_confirm_email
+#  after_create :send_confirm_email
 
   def set_default_role
     self.role ||= :standard
   end
-  
+
 
   private
 
