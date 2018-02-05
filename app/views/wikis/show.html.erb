@@ -11,11 +11,11 @@
       created <%= time_ago_in_words(@wiki.created_at) %>
     </small>
     <br/>
-    <% if current_user.premium? || current_user.admin? && @wiki.private %>
-      <%= link_to 'Public wiki' , public_path(@wiki), class: 'btn btn-danger', \
-    data: { confirm: 'Are you sure? You are about to public wiki.' } %>
-    <% elsif current_user.premium? || current_user.admin? && !@wiki.private %>
-      <%= link_to 'Private wiki' , private_path(@wiki), class: 'btn btn-primary' %>
+    <% if user_is_authorized_for_private_wiki?(@wiki) %>
+      <%= link_to 'Private wiki' , private_path(@wiki), method: :put, class: 'btn btn-primary' %>
+    <% elsif user_is_authorized_for_public_wiki?(@wiki) %>
+      <%= link_to 'Public wiki' , public_path(@wiki), method: :put, class: 'btn btn-danger', \
+  data: { confirm: 'Are you sure? You are about to public wiki.' } %>
     <% end %>
   </div>
 </div>

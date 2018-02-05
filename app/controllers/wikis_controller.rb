@@ -2,7 +2,7 @@ class WikisController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @wikis = Wiki.all
+    @wikis = policy_scope(Wiki)
   end
 
   def show
@@ -58,13 +58,25 @@ class WikisController < ApplicationController
 
   def public
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
     @wiki.update_attribute(:private, false)
+    if @wiki.save
+      flash[:notice] =  "Wiki is public."
+    else
+      flash.now[:alert] = "Error changing wiki to public."
+    end
     redirect_to @wiki
   end
 
   def private
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
     @wiki.update_attribute(:private, true)
+    if @wiki.save
+      flash[:notice] =  "Wiki is private."
+    else
+      flash.now[:alert] = "Error changing wiki to private."
+    end
     redirect_to @wiki
   end
 
