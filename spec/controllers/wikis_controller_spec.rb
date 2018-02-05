@@ -90,6 +90,13 @@ RSpec.describe WikisController, type: :controller do
         expect(response).to redirect_to(:new_user_session)
       end
     end
+
+    describe "GET my_wikis" do
+      it "returns http redirect" do
+        get :my_wikis
+        expect(response).to redirect_to(:new_user_session)
+      end
+    end
   end
 
   context "free plan user" do
@@ -231,6 +238,18 @@ RSpec.describe WikisController, type: :controller do
       it "returns http redirect" do
         put :private, params: { id: my_wiki.id }
         expect(response).to redirect_to(root_path)
+      end
+    end
+
+    describe "GET my_wikis" do
+      it "returns http success" do
+        get :my_wikis
+        expect(response).to have_http_status(:success)
+      end
+
+      it "assigns My_wikis to wikis" do
+        get :index
+        expect(assigns(:wikis)).to eq([my_wiki])
       end
     end
   end
@@ -383,6 +402,18 @@ RSpec.describe WikisController, type: :controller do
         expect(response).to redirect_to(my_wiki)
       end
     end
+
+    describe "GET my_wikis" do
+      it "returns http success" do
+        get :my_wikis
+        expect(response).to have_http_status(:success)
+      end
+
+      it "assigns My_wikis to wikis" do
+        get :index
+        expect(assigns(:wikis)).to eq([my_wiki])
+      end
+    end
   end
 
   context "admin user" do
@@ -526,6 +557,18 @@ RSpec.describe WikisController, type: :controller do
       it "returns http redirect" do
         put :private, params: { id: my_wiki.id }
         expect(response).to redirect_to(my_wiki)
+      end
+    end
+
+    describe "GET my_wikis" do
+      it "returns http success" do
+        get :my_wikis
+        expect(response).to have_http_status(:success)
+      end
+
+      it "assigns My_wikis to wikis" do
+        get :index
+        expect(assigns(:wikis)).to eq([my_wiki])
       end
     end
   end
