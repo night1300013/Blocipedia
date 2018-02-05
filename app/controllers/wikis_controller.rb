@@ -80,6 +80,10 @@ class WikisController < ApplicationController
     redirect_to @wiki
   end
 
+  def my_wikis
+    @wikis = WikiPolicy::Scope.new(current_user, Wiki).show_my_wikis
+  end
+
   private
 
   def wiki_params

@@ -7,6 +7,13 @@ class WikiPolicy < ApplicationPolicy
         scope.all
       end
     end
+
+    def show_my_wikis
+      if user.nil?
+      else
+        scope.where(user: user)
+      end
+    end
   end
 
   def update?

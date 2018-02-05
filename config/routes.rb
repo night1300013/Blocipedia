@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :wikis
   put '/wikis/:id/public', to: 'wikis#public', as: :public
   put '/wikis/:id/private', to: 'wikis#private', as: :private
+  get '/my_wikis', to: 'wikis#my_wikis', as: :my_wikis
 
   devise_for :users
 
