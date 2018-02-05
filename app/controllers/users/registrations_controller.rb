@@ -65,6 +65,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user.update_attribute(:role, 'standard')
     if @user.save
       flash[:notice] = "Downgrade successfully."
+      change_wiki_to_public(@user)
     else
       flash.now[:alert] = "Downgrade failed. Please try again later."
     end
@@ -80,5 +81,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
       flash.now[:alert] = "Upgrade failed. Please try again later."
     end
     redirect_to edit_user_registration_path(@user)
+  end
+
+  private
+
+  def change_wiki_to_public(user)
+    user.wikis.each do |wiki|
+      wiki.private = false
+      wiki.save!
+    end
   end
 end

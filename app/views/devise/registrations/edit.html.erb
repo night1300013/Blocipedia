@@ -42,7 +42,7 @@
 <% elsif @user.premium? %>
   <h2>Downgrade my account</h2>
   <%= link_to 'Downgrade' , downgrade_path(@user), class: 'btn btn-danger', \
-  data: { confirm: 'Are you sure? You won\'t be able to create private wiki.' } %>
+  data: { confirm: 'Are you sure? You won\'t be able to create private wiki and all your private wiki will become public.' } %>
 <% else%>
 <% end %>
 
