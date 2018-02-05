@@ -79,3 +79,5 @@ gem 'devise'
 gem "pundit"
 
 gem 'figaro', '1.0'
+
+gem 'redcarpet'
