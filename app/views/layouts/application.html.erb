@@ -15,6 +15,7 @@
         <li><%= link_to "Home", root_path %>
         <li><%= link_to "About", about_path %>
         <li><%= link_to "Wikis", wikis_path %>
+        <li><%= link_to "My Wikis", my_wikis_path %>
         <% if user_signed_in? %>
           <li class="pull-right">
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'navbar-link' %>
