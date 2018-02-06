@@ -1,0 +1,20 @@
+<% if wiki.private  %>
+  <div class="row">
+    <div class="col-md-8">
+      <p class="lead">Add collaborators to the <em><%= wiki.title %></em> wiki</p>
+      <table style="width:80%">
+      <tr>
+        <th id="header">Email</th>
+        <th id="header">Give Access</th>
+      </tr>
+      <% all_user_except_current_user.each do |user| %>
+        <tr>
+          <td><%= user.email %></td>
+          <td><%= check_box_tag "get access", user.id %></td>
+        </tr>
+      <% end %>
+      </table>
+    </div>
+  </div>
+
+<% end %>

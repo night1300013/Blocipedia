@@ -1,6 +1,7 @@
 class WikiPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
+      wikis = []
       if user.nil? || user.standard?
         scope.where(private: false)
       else
