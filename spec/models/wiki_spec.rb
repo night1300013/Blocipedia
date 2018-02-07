@@ -6,7 +6,6 @@ RSpec.describe Wiki, type: :model do
   let(:collaborator) { create(:collaborator, user: other_user, wiki: wiki)}
   let(:wiki) { create(:wiki, user: user)}
 
-
   it { is_expected.to belong_to(:user) }
   it { is_expected.to have_many(:collaborators) }
   it { is_expected.to have_many(:users).through :collaborators }
