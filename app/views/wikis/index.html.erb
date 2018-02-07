@@ -5,10 +5,10 @@
       <div class="media">
         <div class="media-body">
           <h4 class="media-heading">
-            <%= link_to wiki.title, wiki %>&nbsp;<span class="pull-right border border-dark"><%= "PRIVATE" if wiki.private%></span>
+            <%= link_to markdown(wiki.title), wiki %><span class="pull-right border border-dark"><%= "PRIVATE" if wiki.private%></span>
           </h4>
           <small>
-            <%= wiki.body %>
+            <%= markdown(wiki.body) %>
           </small>
         </div>
       </div>
