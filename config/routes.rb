@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  resources :wikis do
-    resources :collaborators, only: [:create, :destroy]
-  end
+  resources :wikis
   put '/wikis/:id/public', to: 'wikis#public', as: :public
   put '/wikis/:id/private', to: 'wikis#private', as: :private
   get '/my_wikis', to: 'wikis#my_wikis', as: :my_wikis

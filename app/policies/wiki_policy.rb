@@ -2,7 +2,16 @@ class WikiPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       wikis = []
-      if user.role == 'admin'
+      if user.nil?
+        all_wikis = scope.all
+        wikis = []
+        all_wikis.each do |wiki|
+          if !wiki.private?
+            wikis << wiki # only show standard users public wikis, or that private wikis they created or admin makes it private, and private wikis they are a collaborator on
+          end
+        end
+
+      elsif user.role == 'admin'
         wikis = scope.all # if the user is an admin, show them all the wikis
       else # this is the lowly standard user
         all_wikis = scope.all
