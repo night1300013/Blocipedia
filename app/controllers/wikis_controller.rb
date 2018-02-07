@@ -32,8 +32,7 @@ class WikisController < ApplicationController
   def update
     @wiki = Wiki.find(params[:id])
     authorize @wiki
-    @wiki.update_attributes(wiki_params)
-
+    @wiki.assign_attributes(wiki_params)
 
     if @wiki.save
       redirect_to @wiki, notice: "Wiki was updated."
