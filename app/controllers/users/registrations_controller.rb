@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  include ChargesHelper
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
@@ -10,9 +11,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    registration = register_with_credit_card_service
+    if registration
+      # Save the id from the Stripe::Customer object
+      add_customer_id_to_user(registration["id"])
+    else
+      false
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -75,6 +83,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def upgrade
     @user = current_user
     @user.update_attribute(:role, 'premium')
+    charge_with_credit_card_service(@user)
+
     if @user.save
       flash[:notice] = "Upgrade successfully."
     else
@@ -90,5 +100,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
       wiki.private = false
       wiki.save!
     end
+  end
+
+  def register_with_credit_card_service
+    CreditCardService.new({
+      card: params[:stripeToken],
+      email: params[:user][:email]
+    }).create_customer
+  end
+
+  def charge_with_credit_card_service(user)
+    CreditCardService.new({
+      customer: user.external_customer_id, # Note -- this is NOT the user_id in your app
+      amount: Amount.default,
+      description: "BigMoney Membership - #{current_user.email}",
+      currency: 'usd'
+    }).charge
+  end
+
+  def add_customer_id_to_user(id)
+    @user.update_attributes(external_customer_id: id)
   end
 end
