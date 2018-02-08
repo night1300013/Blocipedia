@@ -69,7 +69,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def downgrade
     if current_user.update(role: 'standard')
       flash[:notice] = "Downgrade successfully."
-      change_wiki_to_public(current_user)
+      current_user.make_wikis_public!
     else
       flash.now[:alert] = "Downgrade failed. Please try again later."
     end
@@ -89,13 +89,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   private
-
-  def change_wiki_to_public(user)
-    user.wikis.each do |wiki|
-      wiki.private = false
-      wiki.save!
-    end
-  end
 
   def register_with_credit_card_service
     CreditCardService.new({
