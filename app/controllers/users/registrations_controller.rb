@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Users::RegistrationsController < Devise::RegistrationsController
   include ChargesHelper
   # before_action :configure_sign_up_params, only: [:create]
@@ -69,28 +67,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def downgrade
-    @user = current_user
-    @user.update_attribute(:role, 'standard')
-    if @user.save
+    if current_user.update(role: 'standard')
       flash[:notice] = "Downgrade successfully."
-      change_wiki_to_public(@user)
+      change_wiki_to_public(current_user)
     else
       flash.now[:alert] = "Downgrade failed. Please try again later."
     end
-    redirect_to edit_user_registration_path(@user)
+    redirect_to edit_user_registration_path(current_user)
   end
 
   def upgrade
-    @user = current_user
-    @user.update_attribute(:role, 'premium')
-    charge_with_credit_card_service(@user)
+    current_user.update_attribute(:role, 'premium')
+    charge_with_credit_card_service(current_user)
 
-    if @user.save
+    if current_user.save
       flash[:notice] = "Upgrade successfully."
     else
       flash.now[:alert] = "Upgrade failed. Please try again later."
     end
-    redirect_to edit_user_registration_path(@user)
+    redirect_to edit_user_registration_path(current_user)
   end
 
   private
