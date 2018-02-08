@@ -1,23 +1,13 @@
+require 'faker'
 require 'random_data'
 
 5.times do
   User.create!(
-    email: RandomData.random_email,
-    password: RandomData.random_sentence
+    email: Faker::Internet.email,
+    password: Faker::Internet.password(min_length = 6, max_length = 16)
   )
 end
 users = User.all
-
-50.times do
-  wiki = Wiki.create!(
-    user: users.sample,
-    title: RandomData.random_sentence,
-    body: RandomData.random_paragraph
-  )
-
-  wiki.update_attribute(:created_at, rand(10.minutes .. 1.year).ago)
-end
-wikis = Wiki.all
 
 User.create!(
   email: 'night1300013@gmail.com',
@@ -30,6 +20,19 @@ User.create!(
   password: 111111,
   role: 'standard'
 )
+
+50.times do
+  wiki = Wiki.create!(
+    user: users.sample,
+    title: Faker::Commerce.product_name,
+    body: Faker::Lorem.paragraphs.join(' ')
+  )
+
+  wiki.update_attribute(:created_at, Faker::Time.backward(365, :evening))
+end
+wikis = Wiki.all
+
+
 
 puts "Seed finished"
 puts "#{User.count} users created"

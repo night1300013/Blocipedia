@@ -51,6 +51,7 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 4.0'
   gem 'pry-rails'
   gem 'pry-byebug'
+  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 end
 
 group :development do
@@ -78,3 +79,6 @@ gem "pundit"
 gem 'figaro', '1.0'
 
 gem 'stripe'
+
+gem 'redcarpet'
+

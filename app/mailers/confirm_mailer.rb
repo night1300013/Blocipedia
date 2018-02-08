@@ -3,9 +3,9 @@ class ConfirmMailer < ApplicationMailer
 
   def confirm_mail(user)
 
-     headers["Message-ID"] = "<#{user.email}@pure-shelf-78255.herokuapp.com>"
-     headers["In-Reply-To"] = "<#{user.email}@pure-shelf-78255.herokuapp.com>"
-     headers["References"] = "<#{user.email}@pure-shelf-78255.herokuapp.com>"
+     headers["Message-ID"] = "<#{user.email}@limitless-plains-98135.herokuapp.com>"
+     headers["In-Reply-To"] = "<#{user.email}@limitless-plains-98135.herokuapp.com>"
+     headers["References"] = "<#{user.email}@limitless-plains-98135.herokuapp.com>"
 
      @user = user
 
