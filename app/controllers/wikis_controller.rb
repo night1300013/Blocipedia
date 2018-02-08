@@ -34,7 +34,6 @@ class WikisController < ApplicationController
     authorize @wiki
     @wiki.assign_attributes(wiki_params)
 
-
     if @wiki.save
       redirect_to @wiki, notice: "Wiki was updated."
     else
@@ -60,6 +59,7 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     authorize @wiki
     @wiki.update_attribute(:private, false)
+    @wiki.update_attribute(:user_ids, [])
     if @wiki.save
       flash[:notice] =  "Wiki is public."
     else
@@ -87,6 +87,6 @@ class WikisController < ApplicationController
   private
 
   def wiki_params
-    params.require(:wiki).permit(:title, :body, :private)
+    params.require(:wiki).permit(:title, :body, :private, user_ids:[])
   end
 end
