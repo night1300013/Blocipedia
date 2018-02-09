@@ -1,7 +1,9 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  has_many :wikis, dependent: :destroy
+  has_many :wikis
+  has_many :collaborators
+  has_many :private_wikis, through: :collaborators, source: :wiki
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :wikis, dependent: :destroy
@@ -23,4 +25,7 @@ class User < ApplicationRecord
     ConfirmMailer.confirm_mail(self).deliver_now
   end
 
+  def self.all_except(user)
+    where.not(id: user)
+  end
 end

@@ -1,0 +1,23 @@
+<% if wiki.private && (current_user.premium? || current_user.admin?)%>
+  <div class="row">
+    <div class="col-md-8">
+      <p class="lead">Add collaborators to the <em><%= wiki.title %></em> wiki</p>
+      <table style="width:100%">
+      <tr>
+        <th id="header">Email</th>
+        <th id="header">Give Access</th>
+      </tr>
+        <%= form_for wiki do |f| %>
+          <%= f.collection_check_boxes :user_ids, User.all_except(current_user), :id, :email do |x| %>
+            <tr>
+              <td><%= x.label { x.text }%></td>
+              <td><%= x.label { x.check_box }%></td>
+            </tr>
+          <% end %>
+      </table>
+          <%= f.submit 'Save collaborator', :class => 'btn btn-primary' %>
+        <% end %>
+    </div>
+  </div>
+
+<% end %>
