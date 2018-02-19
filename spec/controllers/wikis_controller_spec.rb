@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe WikisController, type: :controller do
   let(:my_user) { create(:user) }
   let(:other_user) { create(:user) }
-  let(:my_wiki) { create(:wiki, user: my_user) }
-  let(:private_wiki) { create(:wiki, user: my_user, private: true)}
+  let!(:my_wiki) { create(:wiki, user: my_user) }
+  let!(:private_wiki) { create(:wiki, user: other_user, private: true)}
 
   context "guest" do
     describe "GET index" do
@@ -248,7 +248,7 @@ RSpec.describe WikisController, type: :controller do
       end
 
       it "assigns My_wikis to wikis" do
-        get :index
+        get :my_wikis
         expect(assigns(:wikis)).to eq([my_wiki])
       end
     end
@@ -268,7 +268,7 @@ RSpec.describe WikisController, type: :controller do
 
       it "assigns Wiki.all to wiki" do
         get :index
-        expect(assigns(:wikis)).to eq([my_wiki, private_wiki])
+        expect(assigns(:wikis)).to eq([my_wiki])
       end
     end
 
@@ -410,7 +410,7 @@ RSpec.describe WikisController, type: :controller do
       end
 
       it "assigns My_wikis to wikis" do
-        get :index
+        get :my_wikis
         expect(assigns(:wikis)).to eq([my_wiki])
       end
     end
@@ -567,7 +567,7 @@ RSpec.describe WikisController, type: :controller do
       end
 
       it "assigns My_wikis to wikis" do
-        get :index
+        get :my_wikis
         expect(assigns(:wikis)).to eq([my_wiki])
       end
     end
