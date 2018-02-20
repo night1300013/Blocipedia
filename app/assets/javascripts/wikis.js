@@ -1,6 +1,8 @@
 $(document).ready( function() {
+  var md = window.markdownit();
+
   $('#wiki_body').keyup(function() {
-    var $this = $(this);
-    $('.'+$this.attr('id')+'').html($this.val());
+    var text = md.render($(this).val());
+    $('.wiki_body').html(text);
   });
 });
