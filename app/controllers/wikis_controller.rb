@@ -6,7 +6,7 @@ class WikisController < ApplicationController
   end
 
   def show
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
   end
 
   def new
@@ -26,11 +26,11 @@ class WikisController < ApplicationController
   end
 
   def edit
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
   end
 
   def update
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki
     @wiki.assign_attributes(wiki_params)
 
@@ -43,7 +43,7 @@ class WikisController < ApplicationController
   end
 
   def destroy
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki
 
     if @wiki.destroy
@@ -56,7 +56,7 @@ class WikisController < ApplicationController
   end
 
   def public
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki
     @wiki.update_attribute(:private, false)
     @wiki.update_attribute(:user_ids, [])
@@ -69,7 +69,7 @@ class WikisController < ApplicationController
   end
 
   def private
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki
     @wiki.update_attribute(:private, true)
     if @wiki.save

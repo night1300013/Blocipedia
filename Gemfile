@@ -83,3 +83,5 @@ gem 'stripe'
 gem 'redcarpet'
 
 gem 'haml'
+
+gem 'friendly_id'
