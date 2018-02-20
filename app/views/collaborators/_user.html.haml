@@ -1,0 +1,20 @@
+- if wiki.private && (current_user.premium? || current_user.admin?)
+  .row
+    .col-md-8
+      %p.lead
+        Add collaborators to the
+        %em
+          #{wiki.title} wiki
+      %table{ style:"width:100%" }
+        %tr
+          %th#header Email
+          %th#header Give Access
+        = form_for wiki do |f|
+          = f.collection_check_boxes :user_ids, User.all_except(current_user), :id, :email do |x|
+            %tr
+              %td
+                = x.label { x.text }
+              %td
+                = x.label { x.check_box }
+
+          = f.submit 'Save collaborator', :class => 'btn btn-primary'

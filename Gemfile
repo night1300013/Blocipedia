@@ -82,3 +82,4 @@ gem 'stripe'
 
 gem 'redcarpet'
 
+gem 'haml'

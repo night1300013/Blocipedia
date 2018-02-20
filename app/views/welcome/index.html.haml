@@ -1,0 +1,21 @@
+.space
+  %h1.text-center Blocipedia: Social, Markdown Wikis
+
+.jumbotron
+  %h2.text-center Create and share Markdown Wikis
+  - unless user_signed_in?
+    %p.btn-center
+      = link_to "Sign up", new_user_registration_path, class: 'btn btn-primary btn-lg'
+
+.row
+  .col-md-6.text-center
+    %h3 Create as many public wikis as you want
+    - unless user_signed_in?
+      = link_to image_tag("/assets/free.png", width: 200), "/users/sign_up"
+      %p Free Plan
+
+  .col-md-6.text-center
+    %h3 Create private wikis
+    - if !(user_signed_in?)
+      = link_to image_tag("/assets/premium.png", width: 200), "/users/sign_up"
+      %p Premium Plan

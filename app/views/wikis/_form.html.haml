@@ -1,0 +1,23 @@
+= form_for wiki do |f|
+  - if wiki.errors.any?
+    .alert.alert-danger
+      %h4
+        = pluralize(wiki.errors.count, "error")
+      %ul
+        - wiki.errors.full_messages.each do |msg|
+          %li
+            = msg
+  = form_group_tag(wiki.errors[:title]) do
+    = f.label :title
+    = f.text_field :title, class: 'form-control', placeholder: "Enter wiki title"
+  = form_group_tag(wiki.errors[:body]) do
+    = f.label :body
+    = f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter wiki body"
+  - if current_user.admin? || (current_user.premium? && wiki.user == current_user)
+    .form-group
+      = f.label :private, class: 'checkbox' do
+        Private wiki
+        = f.check_box :private, id: "private-checkbox"
+  .form-group
+    = f.submit "Save", class: 'btn btn-success'
+  .wiki_body.p-3.mb-2.bg-warning.text-dark
